@@ -1,0 +1,78 @@
+### Sample Run: 
+```
+List of JS files in the html: index.html
+cordova.js
+js/libs/jquery-1.9.1.min.js
+js/libs/moment.min.js
+js/libs/routie.js
+js/libs/jquery.hammer.min.js
+js/libs/requestanimationframe.js
+js/libs/handlebars.js
+js/libs/tween.min.js
+js/libs/amplify.min.js
+js/libs/GALocalStorage.js
+js/libs/overthrow.js
+js/utils.js
+js/plugins.js
+js/plugins-pgbuild-ad.js
+js/plugins-purchase.js
+js/app.min.js
+Found some inline JS. Making a new file js/inline_11_11_2018_19_02_1541991748.js and including it in Hybrid Guard.
+Code in inline JS is:
+
+            app.initialize();
+        
+Backing up index.html to original_index.html
+Modifying Hybrid Guard file:hybridGuard.js
+Backing up the original Hybrid Guard file hybridGuard.js to hybridGuard.js.bak
+Modified Hybrid Guard file:hybridGuard.js
+```
+
+#### Contents of NEW(Left) and OLD(Right) HybridGuard.js
+```
+    loadExternalJS=function(principal,url)			                  loadExternalJS=function(principal,url)
+    {								                                              {
+        getCORSContent(principal,url);				                           getCORSContent(principal,url);
+    }								                                              }
+
+    loadExtJSFile(js/inline_11_11_2018_19_01_1541991697.js);    <
+    loadExtJSFile(js/app.min.js);			                          <
+    loadExtJSFile(js/plugins-purchase.js);		                  <
+    loadExtJSFile(js/plugins-pgbuild-ad.js);		                <
+    loadExtJSFile(js/plugins.js);			                          <
+    loadExtJSFile(js/utils.js);				                          <
+    loadExtJSFile(js/libs/overthrow.js);		                    <
+    loadExtJSFile(js/libs/GALocalStorage.js);		                <
+    loadExtJSFile(js/libs/amplify.min.js);		                  <
+    loadExtJSFile(js/libs/tween.min.js);		                    <
+    loadExtJSFile(js/libs/handlebars.js);		                    < 
+    loadExtJSFile(js/libs/requestanimationframe.js);	          <
+    loadExtJSFile(js/libs/jquery.hammer.min.js);	              <
+    loadExtJSFile(js/libs/routie.js);			                      <
+    loadExtJSFile(js/libs/moment.min.js);		                    <
+    loadExtJSFile(js/libs/jquery-1.9.1.min.js);		              <
+    loadExtJSFile(cordova.js);				                          <
+})();								                                                })();
+
+```
+
+#### Diff of NEW(left) and OLD(Right) HTML files:
+```
+      >         <script type="text/javascript" src="cordova.js"></script>
+      >         <script type="text/javascript" src="js/libs/jquery-1.9.1.min.js"></script>
+      >         <script type="text/javascript" src="js/libs/moment.min.js"></script>
+      >         <script type="text/javascript" src="js/libs/routie.js"></script>
+      >         <script type="text/javascript" src="js/libs/jquery.hammer.min.js"></script>
+      >         <script type="text/javascript" src="js/libs/requestanimationframe.js"></script>
+      >         <script type="text/javascript" src="js/libs/handlebars.js"></script>
+      >         <script type="text/javascript" src="js/libs/tween.min.js"></script>
+      >         <script type="text/javascript" src="js/libs/amplify.min.js"></script>
+      >         <script type="text/javascript" src="js/libs/GALocalStorage.js"></script>
+      >         <script type="text/javascript" src="js/libs/overthrow.js"></script>
+      >         <script type="text/javascript" src="js/utils.js"></script>
+      >         <script type="text/javascript" src="js/plugins.js"></script>
+      >         <script type="text/javascript" src="js/plugins-pgbuild-ad.js"></script>
+      >         <script type="text/javascript" src="js/plugins-purchase.js"></script>
+      >         <script type="text/javascript" src="js/app.min.js"></script>
+
+```

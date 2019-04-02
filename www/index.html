@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+    https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+    * Enable inline JS: add 'unsafe-inline' to default-src
+-->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css">
+<script type="text/javascript" src="cordova.js"></script>
+<!-- <script type="text/javascript" src="messaging.js"></script> -->
+<!-- <script type="text/javascript" src="js/index.js"></script> -->
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+<!-- <script type="text/javascript" src="js/contacts.js"></script> -->
+<!-- <script type="text/javascript" src="js/cam.js"></script> -->
+<!-- <script type="text/javascript" src="js/gallery.js"></script> -->
+<!-- <script type="text/javascript" src="js/geoLoc.js"></script> -->
+<!-- <script type="text/javascript" src="js/accelerometer.js"></script> -->
+<script type="text/javascript" src="js/fileopen.js"></script>
+<script type="text/javascript" src="js/coreFlashJax.js"></script>
+
+<title>Galleria</title>
+</head>
+<body>
+
+    <div data-role="header" data-add-back-btn=true>
+        <h1>Gallery</h1>
+    </div>
+    <!-- page1 -->
+    <div data-role="page" id="page1">
+        <div role="main" class="ui-content">
+            <div class="ui-grid-solo">
+            </div>
+            <div class="ui-grid-solo" align="center">
+                <img id="myImage">
+                <button id="takePicture" class="ui-btn">Take Picture</button>
+                <button id="usePicture" class="ui-btn">Use Picture</button>
+            </div>
+            <!-- <div class="ui-grid-solo">
+            <a href="page3.html" data-role="button" class="ui-btn">Contacts</a>
+        </div> -->
+
+    </div>
+    <div>
+        <button id="getGeoLoc" class="ui-btn">Get Current Location</button>
+    </div>
+    <div>
+        <button id="openCalendar" class="ui-btn">Open Calendar</button>
+    </div>
+    <div>
+        <button id="openAlbums" class="ui-btn">Open Albums</button>
+    </div>
+<div id="locDetails">
+    <h2> Location Info:</h2>
+    <!-- <p id="locDetailsParagraph">Getting Location Info.... </p> -->
+    <p id="locDetailsDiv" class="ui-body">Getting Location Info.... </p>
+</div>
+<div id="acceleroDetails">
+    <h2> Accelerometer Info: </h2>
+    <p id="accDetails" class="ui-body">Getting Accelerometer Info.... </p>
+</div>
+<div>
+    <button id="loadExtUrl" class="ui-btn" onClick="loadExtWebPage()">Load Page</button>
+</div>
+<div>
+    <button id="sendMessage" class="ui-btn" >Send SMS</button>
+</div>
+<div>
+    <button id="sendRemoteMessage" class="ui-btn" >Send SMS from Remote Script</button>
+</div>
+<div>
+    <button id="createFile" class="ui-btn" >Create A File</button>
+</div>
+<div>
+    <button id="recordVideo" class="ui-btn" >Record Video</button>
+</div>
+<div>
+    <button id="recordAudio" class="ui-btn">Record Audio</button>
+</div>
+<div>
+    <button id="secureStorage" class="ui-btn" >Add a key to Secure Storage</button>
+</div>
+<div>
+    <button id="retrieveSecureStorage" class="ui-btn" >Retrieve from Secure Storage</button>
+</div>
+<div>
+    <button id="fileTransfer" class="ui-btn" >File Transfer </button>
+</div>
+<div>
+    <h2>Contacts</h2>
+    <button id="openContacts" class="ui-btn" >List Contacts</button>
+</div>
+<div>
+    <p id="contact_results" class="ui-body"></p>
+</div>
+<div>
+    <h2>Files</h2>
+    <button id="openFiles" class="ui-btn" >Files</button>
+</div>
+<!-- FOOTER -->
+<div data-role="footer" data-positon=="fixed">
+    <h4 id="netInfo">Device Offline</h4>
+</div>
+
+</div>
+</body>
+</html>

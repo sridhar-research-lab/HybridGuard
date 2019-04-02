@@ -1,0 +1,93 @@
+{
+  "name": "cordova-plugin-crosswalk-webview",
+  "version": "2.4.0",
+  "description": "Changes the default WebView to CrossWalk",
+  "cordova": {
+    "id": "cordova-plugin-crosswalk-webview",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crosswalk-project/cordova-plugin-crosswalk-webview.git"
+  },
+  "keywords": [
+    "cordova",
+    "chromium",
+    "crosswalk",
+    "webview",
+    "engine",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "engines": {
+    "cordovaDependencies": {
+      "2.0.0": {
+        "cordova": ">=5.2.0",
+        "cordova-android": "4 - 5"
+      },
+      "2.1.0": {
+        "cordova": ">=5.2.0",
+        "cordova-android": "4 - 5"
+      },
+      "2.2.0": {
+        "cordova": ">=5.2.0",
+        "cordova-android": ">=6"
+      },
+      "3.0.0": {
+        "cordova": ">100"
+      }
+    }
+  },
+  "author": "",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://crosswalk-project.org/jira"
+  },
+  "homepage": "https://github.com/crosswalk-project/cordova-plugin-crosswalk-webview",
+  "gitHead": "3f43da977bfcc498c2668535b757f26ed3b323a4",
+  "_id": "cordova-plugin-crosswalk-webview@2.4.0",
+  "_npmVersion": "5.6.0",
+  "_nodeVersion": "9.4.0",
+  "_npmUser": {
+    "name": "baleboy",
+    "email": "francesco.balestrieri@intel.com"
+  },
+  "dist": {
+    "integrity": "sha512-XoUBv7RHvOWMKtI5mwSUzZDgStTaFfRlmZeC1cgicel6cX88IFMr+qqECix5V/xlutiLgEv34rxP4jR3Br19Cg==",
+    "shasum": "90717bc4315c92d3182782fcba6b7ad89e532311",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-crosswalk-webview/-/cordova-plugin-crosswalk-webview-2.4.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "baleboy",
+      "email": "francesco.balestrieri@intel.com"
+    },
+    {
+      "name": "fujunwei",
+      "email": "junwei.fu@intel.com"
+    },
+    {
+      "name": "huningxin",
+      "email": "ningxin.hu@intel.com"
+    },
+    {
+      "name": "agrieve",
+      "email": "agrieve@chromium.org"
+    },
+    {
+      "name": "clelland",
+      "email": "iclelland@google.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-crosswalk-webview-2.4.0.tgz_1516782746684_0.27490250999107957"
+  },
+  "directories": {},
+  "_shasum": "90717bc4315c92d3182782fcba6b7ad89e532311",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-crosswalk-webview/-/cordova-plugin-crosswalk-webview-2.4.0.tgz",
+  "_from": "cordova-plugin-crosswalk-webview@2.4.0",
+  "readme": "ERROR: No README data found!"
+}

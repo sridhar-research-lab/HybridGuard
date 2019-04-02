@@ -1,0 +1,159 @@
+/* jQuery Mobile Overides */
+@font-face {
+  font-family: 'PT Sans Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans Narrow'), local('PTSans-Narrow'), url(font.woff) format('woff');
+}
+*, .ui-li-heading, .ui-li-desc {
+	font-family: 'PT Sans Narrow', sans-serif;
+	line-height: normal;
+	text-shadow: none !important;
+}
+li * {
+  	font-size: 1.13em !important;
+}
+.ui-header .ui-title {	
+  	font-size: 1.3em !important;
+}
+.ui-body-c, .ui-overlay-c {
+	background-image:none;
+	background:#28517f;
+	border:none;
+}
+/* Fix loading anime */ 
+.ui-body-a, .ui-overlay-a {
+	background:none;
+	border:none;
+}
+.ui-header .ui-title, .ui-footer .ui-title, .ui-li-heading {
+	text-overflow:inherit;
+	overflow:visible;
+	white-space: normal;
+	font-weight: normal;
+	margin: 0.4em 0;
+}
+.ui-li .ui-btn-text a.ui-link-inherit {
+	text-overflow:inherit;
+	overflow:visible;
+	white-space: normal;
+}
+.ui-li-desc {
+	margin-bottom:0;
+}
+.ui-page, .weather-info.ui-btn-up-a, .ui-br { 
+	background: #28517f;
+	border:none;
+	border-bottom:1px solid #537499;
+	color:white;
+}
+.ui-controlgroup-label {
+	color:white;	
+}
+.ui-slider .ui-btn-corner-all {
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
+}
+.ui-panel-inner {
+	padding:5px;
+}
+input {
+	background:#fff !important;
+	border-bottom:1px solid #fff !important;
+	text-shadow: 0 1px 0 #fff !important;
+	color:#000 !important;
+}
+div.ui-input-text {
+	background-color: #fff;
+}
+#loading {
+	background:transparent;
+	border:none;
+	color: white;
+}
+#homePageList div {
+    font-weight:normal;
+}
+#homePageList h4 {
+	color:#ccc;
+	padding-bottom:3px;
+}
+
+.highLow {
+	float:left;
+	font-weight: normal;
+	width:100%
+}
+
+.ui-panel-inner > .ui-listview {
+	margin: -5px -5px 0 -5px;
+}
+#preferences a:first-child {
+	font-weight:normal;
+	padding: 5.8px 10px;
+}
+.ui-header img {
+	float:left;
+	margin:3px;
+}
+.ui-li-static.ui-li, .ui-li-thumb {
+	padding-top: .5em;
+	padding-bottom: .5em;
+}
+.ui-li-thumb {
+	padding-left: 10px;
+}
+a, a:hover, a:visited, a:active {
+	color: #2489CE;
+}
+.weather-info>div:first-of-type {
+	margin-bottom:8px;
+}
+.weather-info h4 {
+	margin-top:0;
+}
+.weather-info div span {
+	display:inline-block;
+}
+.weather-info label {
+	display:inline-block;
+	color:#ccc;
+	font-weight:normal;
+	width:46px;
+}
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+	min-height:71px;
+}
+.displayNone {
+	display:none;
+}
+.textAlignCenter {
+	text-align:center;
+}
+.fontWeightNormal {
+    font-weight:normal;
+}
+.ui-footer {
+	text-align:center;
+}
+h2 {
+	margin: 0 !important;
+}
+
+/* labels */
+.precip {
+	min-width:47px;
+}
+.rain {
+	background: url(images/rain32.png) no-repeat -7px -6px;
+	padding-left: 22px;
+}
+.snow {
+	background: url(images/snow32.png) no-repeat -6px -4px;
+	padding-left: 25px;
+}
+.wind {
+	background: url(images/wind32.png) no-repeat 0 -6px;
+	padding-left: 36px;
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ga_trackingId">UA-4104372-8</string>
+    <string name="air.com.KickstandTech.MotorcycleWeather.WeatherAppActivity">Motorcycle Weather</string>
+    <string name="hello">Hello World, WeatherAppActivity!</string>
+    <string name="app_name">Motorcycle Weather</string>
+</resources>

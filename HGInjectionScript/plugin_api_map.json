@@ -1,0 +1,59 @@
+{
+    "resource_map": [
+        {
+            "name": "location",
+            "android_permissions": ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"],
+            "cordova_plugin": "cordova-plugin-geolocation",
+            "APIs": ["navigator.geolocation.getCurrentPosition", "navigator.geolocation.watchPosition"],
+            "policy": "geolocation_policy"
+        },
+        {
+            "name": "camera",
+            "android_permissions": ["android.permission.RECORD_VIDEO", "android.permission.CAMERA", "android.hardware.camera.autofocus"],
+            "cordova_plugin": "cordova-plugin-camera",
+            "APIs": ["navigator.camera.getPicture", "navigator.device.capture.captureVideo"]
+        },
+        {
+            "name": "sms",
+            "android_permissions": ["android.permission.SEND_SMS"],
+            "cordova_plugin": "cordova-sms-plugin",
+            "APIs": ["sms.send"]
+        },
+        {
+            "name": "storage",
+            "android_permissions": ["android.permission.WRITE_EXTERNAL_STORAGE"],
+            "cordova_plugin": "cordova-plugin-file",
+            "APIs": ["window.cordova.plugins.FileOpener"]
+        },
+        {
+            "name": "contacts",
+            "android_permissions": ["android.permission.READ_CONTACTS", "android.permission.WRITE_CONTACTS"],
+            "cordova_plugin": "cordova-plugin-contacts",
+            "APIs": ["navigator.contacts.find"]
+        },
+        {
+            "name": "accounts",
+            "android_permissions": ["android.permission.GET_ACCOUNTS"],
+            "cordova_plugin": "org.apache.cordova.ContactManager",
+            "APIs": ["navigator.contacts.find"]
+        },
+        {
+            "name": "audio",
+            "android_permissions": ["android.permission.RECORD_AUDIO","android.permission.MODIFY_AUDIO_SETTINGS"],
+            "cordova_plugin": "cordova-plugin-media",
+            "APIs": ["navigator.notification.alert", "navigator.device.capture.captureAudio"]
+        },
+        {
+            "name": "phone",
+            "android_permissions": ["android.permission.READ_PHONE_STATE"],
+            "cordova_plugin": "org.apache.cordova.core.device",
+            "APIs": ["window.device.name"]
+        },
+        {
+            "name": "",
+            "android_permissions": [""],
+            "cordova_plugin": "",
+            "APIs": []
+        }
+    ]
+}

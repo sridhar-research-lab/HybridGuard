@@ -1,0 +1,53 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-crosswalk-webview": {
+      "XWALK_VERSION": "23+",
+      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+      "XWALK_MODE": "embedded",
+      "XWALK_MULTIPLEAPK": "true",
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-fileopener": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-media": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-secure-storage": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.test.myapp"
+    },
+    "cordova-sms-plugin": {
+      "PACKAGE_NAME": "com.test.myapp"
+    }
+  },
+  "dependent_plugins": {}
+}
