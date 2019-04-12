@@ -55,8 +55,11 @@ def getPolicies(path):
     anodroid_permissions = getPermissionList(path+"AndroidManifest.xml")
     no_resource_list = []
     all_policy = []
+    permissions_used = []
+    plugin = ""
     for resource in policy_json['resource_map']:
         permissions = resource['android_permissions']
+        print("\nPermissions : ",permissions)
         if permissions[0] in anodroid_permissions:
             for api in resource["APIs"]:
                 policy = []
@@ -64,9 +67,10 @@ def getPolicies(path):
                 policy.append(".".join(api.split(".")[:-1]))
                 policy.append(method)
                 policy.append(resource["policy"])
-                all_policy.append(policy)
+                permissions_used.append(policy).append(permissions[0])
+                plugin = resource["cordova_plugin"]
     print("\nPOLICIES : ",all_policy)
-    return all_policy
+    return all_policy,permissions_used,cordova_plugin
 
 # if __name__ == '__main__':
 #     getPolicies("")

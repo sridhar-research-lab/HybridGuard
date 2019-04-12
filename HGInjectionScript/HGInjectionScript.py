@@ -1,6 +1,7 @@
 import os
 import shutil
 import argparse
+import webbrowser
 
 from parserutil import fetchHtml, getPolicies
 import util
@@ -19,8 +20,23 @@ def open_read_lines(file_name):
        text = f.readlines()
     return text
 
+def parse_cmd_opts():
+
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    # parser.add_argument('--input_html', '-i', dest='input_html',
+    #                     nargs=1, metavar='HTML FILE', required=True,
+    #                     help='Input HTML file to parse')
+    parser.add_argument('--hybrid_guard', '-hg', dest='hybrid_guard_file',
+                        nargs=1, metavar='HTML FILE', required=True,
+                     help='Input Hybrid Guard file to add script tags')
+    args = parser.parse_args()
+    return args
+
 if __name__ == '__main__':
+    # args = parse_cmd_opts()
     dirs = fetchHtml(APP_PATH)
+    uninstall_list = []
+    failed_list = []
     for input_html in dirs :
         html_body = ''.join(open_read_lines(input_html))
         html_soup = BeautifulSoup(html_body, 'html.parser')
@@ -101,13 +117,45 @@ if __name__ == '__main__':
         #Enable Monitors
         enableMonitors_index=hg_file_contents.index('    function enableMonitors(){\n')
         monitorMethod_template = '        HG_instance.monitorMethod({}, "{}", {});\n'
-        policies = getPolicies(APP_PATH)
+        policies,permissions_used,cordova_plugin = getPolicies(APP_PATH)
+        resource_apis = []
         for policy in policies:
             hg_file_contents.insert(enableMonitors_index+1, monitorMethod_template.format(policy[0], policy[1], policy[2])) 
+            resource_apis.append(policy[1])
             
         #Writing Hybrid Guard file 
         print("Backing up the original Hybrid Guard file {} to {}".format(hybrid_guard_js, hybrid_guard_js + '.bak'))
         shutil.copyfile(hybrid_guard_js, hybrid_guard_js + '.bak')
-        with open(hybrid_guard_js, 'w', encoding='utf8') as f:
+        
+        apk_name = input_html.split("\\")[-4]
+
+        try : 
+            with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
+                os.system(f'apktool b {apk_name} -o modified/{apk_name}.apk')
+                old_path = os.getcwd()
+                os.chdir(old_path +'/modified')
+                # os.system('cd modified')
+                os.system(f'printf "udunccmobsec" | sh sign-apk.sh {apk_name}.apk')
+                os.system(f'adb install -r {apk_name}.apk')
+                pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
+                os.system(f'adb shell monkey -p {pkg_name} 1')
+                uninstall_list.append(pkg_name)
+                os.chdir(old_path)
+                resourceAPIs = ",".join(resource_apis)
+                permissionsUsed = ",".join(permissionsUsed)
+                webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissionsUsed}&plugins={cordova_plugin}&resource_apis={resourceAPIs}')
+                print('Fill the form')
+                input_key = input('Press any to move on to the next application. Press q to quit\n')
+                if input_key == 'q':
+                    print(f'Last App Tested: {pkg_name}')
+                    break
+        except Exception as e:
+            print(f'Error: Failed to insert csp on {apk_name} : {e}')
+            failed_list.append(input_html)
+
         print("Modified Hybrid Guard file:{}".format(hybrid_guard_js))
+    for pkg_name in uninstall_list :
+        os.system(f'adb uninstall {pkg_name}')
+    f = open("failed_apps.txt", "w")
+    f.write("\n".join(failed_list))
