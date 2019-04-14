@@ -62,15 +62,14 @@ def getPolicies(path):
         print("\nPermissions : ",permissions)
         if permissions[0] in anodroid_permissions:
             for api in resource["APIs"]:
-                policy = []
                 method = api.split(".")[-1]
-                policy.append(".".join(api.split(".")[:-1]))
-                policy.append(method)
-                policy.append(resource["policy"])
-                permissions_used.append(policy).append(permissions[0])
+                all_policy.append(".".join(api.split(".")[:-1]))
+                all_policy.append(method)
+                all_policy.append(resource["policy"])
+                permissions_used.append(permissions[0])
                 plugin = resource["cordova_plugin"]
     print("\nPOLICIES : ",all_policy)
-    return all_policy,permissions_used,cordova_plugin
+    return all_policy,permissions_used,plugin
 
 # if __name__ == '__main__':
 #     getPolicies("")

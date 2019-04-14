@@ -10,10 +10,10 @@ try:
     from BeautifulSoup import BeautifulSoup
 except ImportError:
     from bs4 import BeautifulSoup
-
+import pdb
 #Change this path
-APP_PATH = "D:\\RA\\Tools\\scripts\\HGInjectionScript\\air.com.KickstandTech.MotorcycleWeather\\"
-HG_file_path = "D:\\RA\\Tools\\scripts\\HGInjectionScript\\inputs\\HybridGuard.js"
+APP_PATH = "C:\\Tabish\\hg_new_workspace\\HybridGuard\\HGInjectionScript\\"
+HG_file_path = "C:\\Tabish\\hg_new_workspace\\HybridGuard\\HGInjectionScript\\inputs\\HybridGuard.js"
 
 def open_read_lines(file_name):
     with open(file_name, 'r', encoding="utf8") as f:
@@ -72,22 +72,22 @@ if __name__ == '__main__':
                     hg_funcs.append(src)
                     script.decompose()
                     print (src)
-            else:
-                # Get inline JS
-                # Write JS to a new file
-                from datetime import datetime as d
-                file_index += 1
-                curr_time = d.now().strftime('%d_%m_%Y_%H_%M_%S')
-                inline_file_name = 'js\\inline_'+ curr_time + '_'+str(file_index)+'.js'
-                print ("-------------------------------------------------------------------------------------------------------")
-                print ("Found some inline JS. Making a new file {} and including it in Hybrid Guard.\nCode in inline JS is:".format(inline_file_name))
-                print (''.join(script.contents))
-                print ("-------------------------------------------------------------------------------------------------------")
-                with open(path_to_hybrid +"\\"+ inline_file_name, 'w', encoding='utf8') as f:
-                    f.write(''.join([x.strip() for x in script.contents]) + '\n')
-                hg_funcs.append(inline_file_name.replace("\\","/"))
-                #delete the script tag from index.html 
-                script.decompose()
+            # else:
+            #     # Get inline JS
+            #     # Write JS to a new file
+            #     from datetime import datetime as d
+            #     file_index += 1
+            #     curr_time = d.now().strftime('%d_%m_%Y_%H_%M_%S')
+            #     inline_file_name = 'js\\inline_'+ curr_time + '_'+str(file_index)+'.js'
+            #     print ("-------------------------------------------------------------------------------------------------------")
+            #     print ("Found some inline JS. Making a new file {} and including it in Hybrid Guard.\nCode in inline JS is:".format(inline_file_name))
+            #     print (''.join(script.contents))
+            #     print ("-------------------------------------------------------------------------------------------------------")
+            #     with open(path_to_hybrid +"\\"+ inline_file_name, 'w', encoding='utf8') as f:
+            #         f.write(''.join([x.strip() for x in script.contents]) + '\n')
+            #     hg_funcs.append(inline_file_name.replace("\\","/"))
+            #     #delete the script tag from index.html 
+            #     script.decompose()
 
         new_tag = html_soup.new_tag("script", src="js/HybridGuard.js")
         html_soup.head.append(new_tag)
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         #Enable Monitors
         enableMonitors_index=hg_file_contents.index('    function enableMonitors(){\n')
         monitorMethod_template = '        HG_instance.monitorMethod({}, "{}", {});\n'
-        policies,permissions_used,cordova_plugin = getPolicies(APP_PATH)
+        policies,permissions_used,cordova_plugin = getPolicies(APP_PATH+input_html.split("\\")[-4]+"\\")
         resource_apis = []
         for policy in policies:
             hg_file_contents.insert(enableMonitors_index+1, monitorMethod_template.format(policy[0], policy[1], policy[2])) 
@@ -139,17 +139,18 @@ if __name__ == '__main__':
                 os.system(f'printf "udunccmobsec" | sh sign-apk.sh {apk_name}.apk')
                 os.system(f'adb install -r {apk_name}.apk')
                 pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
-                os.system(f'adb shell monkey -p {pkg_name} 1')
-                uninstall_list.append(pkg_name)
-                os.chdir(old_path)
-                resourceAPIs = ",".join(resource_apis)
-                permissionsUsed = ",".join(permissionsUsed)
-                webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissionsUsed}&plugins={cordova_plugin}&resource_apis={resourceAPIs}')
-                print('Fill the form')
                 input_key = input('Press any to move on to the next application. Press q to quit\n')
                 if input_key == 'q':
                     print(f'Last App Tested: {pkg_name}')
                     break
+                os.system(f'adb shell monkey -p {pkg_name} 1')
+                uninstall_list.append(pkg_name)
+                os.chdir(old_path)
+                pdb.set_trace()
+                resourceAPIs = ",".join(policies)
+                permissions_used = ",".join(permissions_used)
+                webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugin}&resource_apis={resourceAPIs}')
+                print('Fill the form')
         except Exception as e:
             print(f'Error: Failed to insert csp on {apk_name} : {e}')
             failed_list.append(input_html)

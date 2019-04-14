@@ -11,43 +11,50 @@
             "name": "camera",
             "android_permissions": ["android.permission.RECORD_VIDEO", "android.permission.CAMERA", "android.hardware.camera.autofocus"],
             "cordova_plugin": "cordova-plugin-camera",
-            "APIs": ["navigator.camera.getPicture", "navigator.device.capture.captureVideo"]
+            "APIs": ["navigator.camera.getPicture", "navigator.device.capture.captureVideo"],
+            "policy": "camera_policy"
         },
         {
             "name": "sms",
             "android_permissions": ["android.permission.SEND_SMS"],
             "cordova_plugin": "cordova-sms-plugin",
-            "APIs": ["sms.send"]
+            "APIs": ["sms.send"],
+            "policy": "sms_policy"
         },
         {
             "name": "storage",
             "android_permissions": ["android.permission.WRITE_EXTERNAL_STORAGE"],
             "cordova_plugin": "cordova-plugin-file",
-            "APIs": ["window.cordova.plugins.FileOpener"]
+            "APIs": ["window.cordova.plugins.FileOpener"],
+            "policy":"secureStorage_policy"
         },
         {
             "name": "contacts",
             "android_permissions": ["android.permission.READ_CONTACTS", "android.permission.WRITE_CONTACTS"],
             "cordova_plugin": "cordova-plugin-contacts",
-            "APIs": ["navigator.contacts.find"]
+            "APIs": ["navigator.contacts.find"],
+            "policy":"contacts_policy"
         },
         {
             "name": "accounts",
             "android_permissions": ["android.permission.GET_ACCOUNTS"],
             "cordova_plugin": "org.apache.cordova.ContactManager",
-            "APIs": ["navigator.contacts.find"]
+            "APIs": ["navigator.contacts.find"],
+            "policy":"contacts_policy"
         },
         {
             "name": "audio",
             "android_permissions": ["android.permission.RECORD_AUDIO","android.permission.MODIFY_AUDIO_SETTINGS"],
             "cordova_plugin": "cordova-plugin-media",
-            "APIs": ["navigator.notification.alert", "navigator.device.capture.captureAudio"]
+            "APIs": ["navigator.notification.alert", "navigator.device.capture.captureAudio"],
+            "policy":"audio_policy"
         },
         {
             "name": "phone",
             "android_permissions": ["android.permission.READ_PHONE_STATE"],
             "cordova_plugin": "org.apache.cordova.core.device",
-            "APIs": ["window.device.name"]
+            "APIs": ["window.device.name"],
+            "policy":"getFromSecureStorage_policy"
         },
         {
             "name": "",
