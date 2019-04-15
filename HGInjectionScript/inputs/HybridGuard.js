@@ -482,6 +482,9 @@ var principal_permission_check = function(principal,method,args){
             getCORSContent(principal,url, unique_identifier);
         }
     }
+    //To make changes to this file - https://github.com/ramvinoth/hgtesting/blob/master/custom_thirdparty.js
+    loadExternalJS("local", "https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_thirdparty.js");
+    loadExternalJS("remote", "https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_remote_thirdparty.js");
     /*EXAMPLE
         //alert("Loading ALL using loadExternalJS");
         

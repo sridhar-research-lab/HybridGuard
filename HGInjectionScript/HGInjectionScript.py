@@ -15,6 +15,9 @@ import pdb
 APP_PATH = "C:\\Tabish\\hg_new_workspace\\HybridGuard\\HGInjectionScript\\"
 HG_file_path = "C:\\Tabish\\hg_new_workspace\\HybridGuard\\HGInjectionScript\\inputs\\HybridGuard.js"
 
+#APP_PATH = "D:\\RA\\Tools\\scripts\\HGInjectionScript\\apps\\cordova_thirdparty_apps\\"
+#HG_file_path = "D:\\RA\\Tools\\HybridGuard\\HGInjectionScript\\inputs\\HybridGuard.js"
+
 def open_read_lines(file_name):
     with open(file_name, 'r', encoding="utf8") as f:
        text = f.readlines()
@@ -117,22 +120,29 @@ if __name__ == '__main__':
         #Enable Monitors
         enableMonitors_index=hg_file_contents.index('    function enableMonitors(){\n')
         monitorMethod_template = '        HG_instance.monitorMethod({}, "{}", {});\n'
-        policies,permissions_used,cordova_plugin = getPolicies(APP_PATH+input_html.split("\\")[-4]+"\\")
+        policies,policies_used,permissions_used,cordova_plugins = getPolicies(APP_PATH+input_html.split("\\")[-4]+"\\")
         resource_apis = []
         for policy in policies:
             hg_file_contents.insert(enableMonitors_index+1, monitorMethod_template.format(policy[0], policy[1], policy[2])) 
-            resource_apis.append(policy[1])
-            
+            resource_apis.append(policy[1]) 
+        
+        
+        resourceAPIs = ",".join(policies_used)
+        print("policies : "+str(resourceAPIs))
+        permissions_used = ",".join(permissions_used)
+        cordova_plugins = ",".join(cordova_plugins)
+        print("permissions_used : "+str(permissions_used))
+        
         #Writing Hybrid Guard file 
         print("Backing up the original Hybrid Guard file {} to {}".format(hybrid_guard_js, hybrid_guard_js + '.bak'))
         shutil.copyfile(hybrid_guard_js, hybrid_guard_js + '.bak')
         
         apk_name = input_html.split("\\")[-4]
-
+        app_location = APP_PATH+apk_name
         try : 
             with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
-                os.system(f'apktool b {apk_name} -o modified/{apk_name}.apk')
+                os.system(f'apktool b {app_location} -o modified/{apk_name}.apk')
                 old_path = os.getcwd()
                 os.chdir(old_path +'/modified')
                 # os.system('cd modified')
@@ -146,10 +156,8 @@ if __name__ == '__main__':
                 os.system(f'adb shell monkey -p {pkg_name} 1')
                 uninstall_list.append(pkg_name)
                 os.chdir(old_path)
-                pdb.set_trace()
-                resourceAPIs = ",".join(policies)
-                permissions_used = ",".join(permissions_used)
-                webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugin}&resource_apis={resourceAPIs}')
+                # pdb.set_trace()
+                webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugins}&resource_apis={resourceAPIs}')
                 print('Fill the form')
         except Exception as e:
             print(f'Error: Failed to insert csp on {apk_name} : {e}')
