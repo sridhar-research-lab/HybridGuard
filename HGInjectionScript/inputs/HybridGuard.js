@@ -59,7 +59,7 @@
             //revised version supporting AS calls
             function execWith(principal, f) {
                 if(f==undefined) return;
-                console.log(HGInstances[instance_key]);
+                // console.log(HGInstances[instance_key]);
                 this.setPrincipal(principal);
                 
                 //ensure to call original apply function
@@ -81,13 +81,15 @@
             //The common monitor function to intercept a function call with a policy
             var monitorMethod = function(object, method, policy) {
                 // Find function corresponding to alias
-                while (!hasOwnProperty.call(object, method) && object.__proto__)
+                while (object !=undefined && !hasOwnProperty.call(object, method) && object.__proto__)
                 object = object.__proto__;
-                if (object === null)
-                throw new Error('Failed to find function for alias ' + method);
+                if (object === null){
+                    return;
+                    // throw new Error('Failed to find function for alias ' + method);
+                }
                 var original = object[method];
                 if ((original === null) || (original === undefined))
-                throw new Error('No method ' + method +' found for '+ object.toString);
+                    throw new Error('No method ' + method +' found for '+ object.toString);
                 //make sure to call the original apply function
                 original.apply = builtins.Function.apply;
                 object[method] = function wrapper() {
@@ -109,7 +111,7 @@
                 //interface
                 //element.addEventListener(type, listener[, useCapture]);
                 var listener = args[1];
-                console.log("eventlistner policy principal : "+ principal)
+                // console.log("eventlistner policy principal : "+ principal)
                 args[1] = function(){return execWith(principal, listener)};
                 return proceed();
             };
@@ -199,7 +201,6 @@ var principal_permission_check = function(principal,method,args){
     }
  //=============================================================================================
 
-    var unique_identifier;
     var HG_instance;
     var geolocation_policy = function(args, proceed, principal) {
         alert("!!!!!        geolocation_policy        !!!!!");
@@ -213,290 +214,99 @@ var principal_permission_check = function(principal,method,args){
             alert("Access not allowed");
         }
     };
-
-    var camera_policy = function(args, proceed, principal) {
-        alert("Inside camera policy");
-        alert("principal \' " + principal);
-        if(principal_permission_check(principal,'camera',args)){
-            return proceed();//run the original method
-        }else{
-            alert("Access Denied");
-        }
-    };
-    var captureVideo_policy = function(args,proceed, principal)
-    {
-        alert("principal \' " + principal + "\' invokes navigator.device.capture.captureVideo");
-        alert("!!!!!captureVideo_policy!!!!!");
-        if(principal_permission_check(principal,'video',args)){
-            alert("Policy working correctly")
-            return proceed();
-        }
-    }
-    var audio_policy = function(args, proceed, object) {
-        alert("Inside audio policy");
-        var principal = thisPrincipal();
-        return proceed();
-    };
-    var current_accelerometer_policy = function(args, proceed,object)
-    {
-        var principal = thisPrincipal();
-        // var element = proceed();
-        // monitorMethod(element,'addEventListener',addEventListener_policy);
-        alert("principal \' " + principal + "\' invokes navigator.accelerometer.getCurrentAcceleration");
-        if(principal_permission_check(principal,"accelerometer",args)) {
-            return proceed();
-        }
-    }
-    var watch_accelerometer_policy = function(args, proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes navigator.accelerometer.watchAcceleration");
-        // alert("!!!!!gwatch_accelerometer_policy!!!!!");
-        return proceed();
-    }
-    var get_album_policy = function(args, proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes GalleryAPI.prototype.getAlbums");
-        alert("!!!!!get_album_policy!!!!!");
-        return proceed();
-    }
-    var get_media_policy = function(args, proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes GalleryAPI.prototype.getMedia");
-        alert("!!!!!get_media_policy!!!!!");
-        return proceed();
-    }
-
-    var contacts_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes navigator.contacts.find");
-        alert("!!!!!contact_policy!!!!!");
-        if(principal_permission_check(principal,"contacts",args)){
-            contact_read = true
-            return proceed();
-        }else{
-            alert("Access Denied for Contacts")
-        }
-    }
-    var captureVideo_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes navigator.device.capture.captureVideo");
-        alert("!!!!!captureVideo_policy!!!!!");
-        if(principal_permission_check(principal,'video',args)){
-            alert("Policy working correctly")
-            return proceed();
-        }
-    }
-    var addToSecureStorage_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage.set");
-        alert("!!!!!addToSecureStorage_policy!!!!!");
-        return proceed();
-    }
-    var getFromSecureStorage_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage.get");
-
-        alert("!!!!!getFromSecureStorage_policy!!!!!");
-        isAllowed = principal_permission_check(principal_id,"secureStorage",args,operation="write")
-        if(isAllowed){
-            return proceed()
-        }
-        else {
-            alert("Not Allowed")
-        }
-    }
-    var secureStorage_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage");
-        alert("!!!!!secureStorage_policy!!!!!");
-        isAllowed = principal_permission_check(principal_id,"secureStorage",args,operation="write")
-        if(isAllowed){
-            alert("here")
-            return proceed()
-        }
-        else {
-            alert("Not allowed")
-        }
-    }
-
-    var open_calendar_policy = function(args, proceed, object)
-    {
-        var principal = thisPrincipal();
-        alert("!!!!!! Calendar Policy !!!!!!!!!!");
-
-        var isAllowed = principal_permission_check(principal,"calendar",args);
-        if(isAllowed == true){
-            return proceed();//run the original method
-        }
-        else{
-            alert("Access to calendar not allowed");
-        }
-    }
-
-    var whitelist_check = function(args) {
-        // var response = get_URL('js/policy_config.json');
-        // var actual_JSON = JSON.parse(response);
-        //This code finds the sms whitelist parameter and checks if its there
-        whitelist_resource = policy.resources.find(resource_name => resource_name['name'] == 'sms_whitelist');
-        // print(args)
-        if (whitelist_resource === undefined) {
-            return true;
-        }
-        return whitelist_resource.numbers.includes(args);
-    }
-
-    var bound_check = function(args) {
-        if(sms_count < 3) {
-            sms_count++;
-            return true
-        }
-        return false
-    }
-
-    var sms_policy =  function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes sms.send");
-        alert("!!!!!sms_policy!!!!!");
-        var isAllowed = principal_permission_check(principal,"sms",args[0],operation="send");
-        if(whitelist_check(args[0]) == false) {
-            alert("whitelist failed");
-            return
-        }
-        
-        if(contact_read == true) {
-            alert("cannot send sms after reading contacts");
-            return
-        }
-        if(bound_check() == false) {
-            alert("bound check failed");
-            return
-        }
-        if(location_read == true){
-            alert('cannot send SMS after reading location');
-        }
-        else if(isAllowed == true){
-            return proceed();
-        }
-        else{
-            alert("Access Not allowed");
-        }
-    }
-
-    var fs_policy = function(args,proceed,object)
-    {
-        var principal = thisPrincipal();
-        alert("principal \' " + principal + "\' invokes fileSystem read");
-        var isAllowed = principal_permission_check(principal,"filesystem",args,operation="read")
-        if(isAllowed){
-            alert("!!!!!fs_policy!!!!!");
-            return proceed();
-        }
-        return;
-    }
     document.addEventListener("deviceready", enableMonitors, false);
 
     function enableMonitors(){
         alert("Enable monitors");
     }
 
-    function isJSURL(url){
-        // //alert(url.split('.').pop().split(/\#|\?/)[0]);
-        return url.split('.').pop().split(/\#|\?/)[0]==='js';
-    }
+    var functionTracker = {};
+    functionTracker.log = true;//Set this to false to disable tracking 
 
-    //CORS request
-    //From: http://www.html5rocks.com/en/tutorials/cors/
-    function createCORSRequest(method, url) {
-        var xhr = new XMLHttpRequest();
-        if ("withCredentials" in xhr) {
+    /**
+     * Gets a function that when called will log information about itself if tracking is turned on.
+     *
+     * @param func The function to add tracking to.
+     * @param name The name of the function.
+     *
+     * @return A function that will perform tracking and then call the function. 
+     */
+    functionTracker.getTrackableFunction = function(func, name) {
+        return function() {
+            if (functionTracker.log) {
+                var logText = name + '(';
 
-            // Check if the XMLHttpRequest object has a "withCredentials" property.
-            // "withCredentials" only exists on XMLHTTPRequest2 objects.
-            xhr.open(method, url, true);
-
-        } else if (typeof XDomainRequest != "undefined") {
-
-            // Otherwise, check if XDomainRequest.
-            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-            xhr = new XDomainRequest();
-            xhr.open(method, url);
-
-        } else {
-
-            // Otherwise, CORS is not supported by the browser.
-            xhr = null;
-
-        }
-        return xhr;
-    }
-
-    function getCORSContent(principal,url, unique_identifier) {
-        var xhr = createCORSRequest('GET', url);
-        if (!xhr) {
-            //alert('CORS not supported');
-            return;
-        }
-        var text;
-        // Response handlers.
-        xhr.onload = function() {
-            text = xhr.responseText;
-            //var title = getTitle(text);
-             ////alert('Response from CORS request to '+principal+"-------" + url + ': ' + text);
-            if (isJSURL(url)) {
-                // //alert('JS file');
-                HG_instance = HG.getInstance(unique_identifier);
-                HG_instance.execScript(principal,text);
+                for (var i = 0; i < arguments.length; i++) {
+                    if (i > 0) {
+                        logText += ', ';
+                    }
+                    logText += arguments[i];
+                }
+                logText += ');';
+                this.principal = "remote";
+                principal = "remotes";
+                HG_instance.setPrincipal("remotesss");
+                console.log(logText);
             }
-        };
 
-        xhr.onerror = function() {
-            //alert('Woops, there was an error making the request.');
-        };
-
-        try{
-            xhr.send(null);
-            return text;
-        }catch(e){
-            irm_log("XMLHttpRequest error:"+e);
+            return func.apply(this, arguments);
         }
-        return '';
+    };
 
+    var excludedFunctions = {};
+    var includedFunctions = [];
+    functionTracker.excludeTrackingToNamespace = function(namespaceObject){
+        for(var name in namespaceObject){
+            var potentialFunction = namespaceObject[name];
+
+            if(Object.prototype.toString.call(potentialFunction) === '[object Function]') {
+                excludedFunctions[name] = name;
+            }
+        }
+    };
+    functionTracker.addTrackingToNamespace = function(namespaceObject){
+        for(var name in namespaceObject){
+            var potentialFunction = namespaceObject[name];
+    
+            if(Object.prototype.toString.call(potentialFunction) === '[object Function]' && 
+               !excludedFunctions[name]) {
+                //    alert(name);
+                includedFunctions.push(name);
+                namespaceObject[name] = functionTracker.getTrackableFunction(potentialFunction, name);
+            }
+        }
+    };    
+    loadExternalJS=function(principal, url){
+        var success_callback = function(){alert("success: script loaded")}
+        var error_callback = function(){alert("error loading script")}
+        var DOMlocation = document.head;
+        HG_instance = HG.getInstance(url);
+        HG_instance.setPrincipal(principal);
+        // alert("Start");
+        
+        var scriptTag = document.createElement('script');
+        scriptTag.src = url;
+        scriptTag.type = "text/javascript";
+        scriptTag.onload = success_callback;
+        scriptTag.onerror = error_callback;
+        scriptTag.onreadystatechange = success_callback;
+        
+        // alert(document.currentScript.src)
+        
+        functionTracker.excludeTrackingToNamespace(window);
+        DOMlocation.appendChild(scriptTag);
+        functionTracker.addTrackingToNamespace(window);
     }
-    loadExternalJS=function(principal,url, unique_identifier){
-        if(unique_identifier === undefined){
-            unique_identifier = url.split(".")[0]+String(Date.now())+Math.floor(Math.random()*10000);
-        }
-        if(principal == "DEFAULT"){
-            HG_instance = HG.getInstance(unique_identifier);
-            HG_instance.setPrincipal(principal);    
-        }else{
-            getCORSContent(principal,url, unique_identifier);
-        }
-    }
+    //var callback_fn = function(){
+        //your code goes here
+        //alert("script After loaded");
+        //functionTracker.addTrackingToNamespace(window);
+        //alert(includedFunctions);
+        //console.log("excludedFunctions : ", excludedFunctions);
+        //console.log("includedFunctions : ", includedFunctions);
+    //}
     //To make changes to this file - https://github.com/ramvinoth/hgtesting/blob/master/custom_thirdparty.js
-    loadExternalJS("local", "https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_thirdparty.js");
-    loadExternalJS("remote", "https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_remote_thirdparty.js");
-    /*EXAMPLE
-        //alert("Loading ALL using loadExternalJS");
-        
-        loadExternalJS('local', 'index.js', 'index');
-        loadExternalJS('remote', 'general.js', 'general');
-        
-        //This should called after all the JS files 
-        //To set document context
-        //Anything loads from document is protected by CSP (Verified with Abhinav)
-        
-        setTimeout(function(){
-            loadExternalJS('DEFAULT', 'document', 'document');
-        }, 100);
-    */
-})();
+    // loadExternalJS('js/controllers.js', callback_fn, document.head, "local");
+    // loadExternalJS('https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_thirdparty.js', callback_fn, document.head, "remote");
+   
+})()
