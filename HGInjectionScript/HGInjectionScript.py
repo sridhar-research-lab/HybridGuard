@@ -23,6 +23,23 @@ def open_read_lines(file_name):
        text = f.readlines()
     return text
 
+def install_and_open_apk(app_location,apk_name,uninstall_list,sign=True):
+    os.system(f'apktool b {app_location} -o modified/{apk_name}.apk')
+    old_path = os.getcwd()
+    os.chdir(old_path +'/modified')
+    # os.system('cd modified')
+    if sign :
+        os.system(f'printf "udunccmobsec" | sh sign-apk.sh {apk_name}.apk')
+    os.system(f'adb install -r {apk_name}.apk')
+    pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
+    os.chdir(old_path)
+    uninstall_list.append(pkg_name)
+
+
+    # input_key = input('Press any to move on to the next application. Press q to quit\n')
+    # if input_key == 'q':
+    #     print(f'Last App Tested: {pkg_name}')
+
 def parse_cmd_opts():
 
     parser = argparse.ArgumentParser(description='Process some integers.')
@@ -41,6 +58,13 @@ if __name__ == '__main__':
     uninstall_list = []
     failed_list = []
     for input_html in dirs :
+        apk_name = input_html.split("\\")[-4]
+        app_location = APP_PATH+apk_name
+        install_and_open_apk(app_location,apk_name,uninstall_list,False)
+        input_text = input("Is the application working y/n")
+        if input_text == 'n':
+            continue
+
         html_body = ''.join(open_read_lines(input_html))
         html_soup = BeautifulSoup(html_body, 'html.parser')
         all_script_tags = html_soup.find_all('script')
@@ -137,24 +161,15 @@ if __name__ == '__main__':
         print("Backing up the original Hybrid Guard file {} to {}".format(hybrid_guard_js, hybrid_guard_js + '.bak'))
         shutil.copyfile(hybrid_guard_js, hybrid_guard_js + '.bak')
         
-        apk_name = input_html.split("\\")[-4]
-        app_location = APP_PATH+apk_name
         try : 
             with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
-                os.system(f'apktool b {app_location} -o modified/{apk_name}.apk')
-                old_path = os.getcwd()
-                os.chdir(old_path +'/modified')
-                # os.system('cd modified')
-                os.system(f'printf "udunccmobsec" | sh sign-apk.sh {apk_name}.apk')
-                os.system(f'adb install -r {apk_name}.apk')
-                pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
+                install_and_open_apk(app_location,app_name,uninstall_list)
                 input_key = input('Press any to move on to the next application. Press q to quit\n')
                 if input_key == 'q':
                     print(f'Last App Tested: {pkg_name}')
                     break
                 os.system(f'adb shell monkey -p {pkg_name} 1')
-                uninstall_list.append(pkg_name)
                 os.chdir(old_path)
                 # pdb.set_trace()
                 webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugins}&resource_apis={resourceAPIs}')
