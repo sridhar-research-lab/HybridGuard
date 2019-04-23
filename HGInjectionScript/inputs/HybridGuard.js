@@ -214,6 +214,194 @@ var principal_permission_check = function(principal,method,args){
             alert("Access not allowed");
         }
     };
+    var camera_policy = function(args, proceed, principal) {
+        alert("Inside camera policy");
+        alert("principal \' " + principal);
+        if(principal_permission_check(principal,'camera',args)){
+            return proceed();//run the original method
+        }else{
+            alert("Access Denied");
+        }
+    };
+    var captureVideo_policy = function(args,proceed, principal)
+    {
+        alert("principal \' " + principal + "\' invokes navigator.device.capture.captureVideo");
+        alert("!!!!!captureVideo_policy!!!!!");
+        if(principal_permission_check(principal,'video',args)){
+            alert("Policy working correctly")
+            return proceed();
+        }
+    }
+    var audio_policy = function(args, proceed, object) {
+        alert("Inside audio policy");
+        var principal = thisPrincipal();
+        return proceed();
+    };
+    var current_accelerometer_policy = function(args, proceed,object)
+    {
+        var principal = thisPrincipal();
+        // var element = proceed();
+        // monitorMethod(element,'addEventListener',addEventListener_policy);
+        alert("principal \' " + principal + "\' invokes navigator.accelerometer.getCurrentAcceleration");
+        if(principal_permission_check(principal,"accelerometer",args)) {
+            return proceed();
+        }
+    }
+    var watch_accelerometer_policy = function(args, proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes navigator.accelerometer.watchAcceleration");
+        // alert("!!!!!gwatch_accelerometer_policy!!!!!");
+        return proceed();
+    }
+    var get_album_policy = function(args, proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes GalleryAPI.prototype.getAlbums");
+        alert("!!!!!get_album_policy!!!!!");
+        return proceed();
+    }
+    var get_media_policy = function(args, proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes GalleryAPI.prototype.getMedia");
+        alert("!!!!!get_media_policy!!!!!");
+        return proceed();
+    }
+
+    var contacts_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes navigator.contacts.find");
+        alert("!!!!!contact_policy!!!!!");
+        if(principal_permission_check(principal,"contacts",args)){
+            contact_read = true
+            return proceed();
+        }else{
+            alert("Access Denied for Contacts")
+        }
+    }
+    var captureVideo_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes navigator.device.capture.captureVideo");
+        alert("!!!!!captureVideo_policy!!!!!");
+        if(principal_permission_check(principal,'video',args)){
+            alert("Policy working correctly")
+            return proceed();
+        }
+    }
+    var addToSecureStorage_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage.set");
+        alert("!!!!!addToSecureStorage_policy!!!!!");
+        return proceed();
+    }
+    var getFromSecureStorage_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage.get");
+
+        alert("!!!!!getFromSecureStorage_policy!!!!!");
+        isAllowed = principal_permission_check(principal_id,"secureStorage",args,operation="write")
+        if(isAllowed){
+            return proceed()
+        }
+        else {
+            alert("Not Allowed")
+        }
+    }
+    var secureStorage_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes cordova.plugins.SecureStorage");
+        alert("!!!!!secureStorage_policy!!!!!");
+        isAllowed = principal_permission_check(principal_id,"secureStorage",args,operation="write")
+        if(isAllowed){
+            alert("here")
+            return proceed()
+        }
+        else {
+            alert("Not allowed")
+        }
+    }
+
+    var open_calendar_policy = function(args, proceed, object)
+    {
+        var principal = thisPrincipal();
+        alert("!!!!!! Calendar Policy !!!!!!!!!!");
+
+        var isAllowed = principal_permission_check(principal,"calendar",args);
+        if(isAllowed == true){
+            return proceed();//run the original method
+        }
+        else{
+            alert("Access to calendar not allowed");
+        }
+    }
+    /*Issues with whitelist_check function
+    var whitelist_check = function(args) {
+        // var response = get_URL('js/policy_config.json');
+        // var actual_JSON = JSON.parse(response);
+        //This code finds the sms whitelist parameter and checks if its there
+        whitelist_resource = policy.resources.find((resource_name) => resource_name['name'] == 'sms_whitelist');
+        // print(args)
+        if (whitelist_resource === undefined) {
+            return true;
+        }
+        return whitelist_resource.numbers.includes(args);
+    }
+    */
+    var bound_check = function(args) {
+        if(sms_count < 3) {
+            sms_count++;
+            return true
+        }
+        return false
+    }
+
+    var sms_policy =  function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes sms.send");
+        alert("!!!!!sms_policy!!!!!");
+        var isAllowed = principal_permission_check(principal,"sms",args[0],operation="send");
+        if(whitelist_check(args[0]) == false) {
+            alert("whitelist failed");
+            return
+        }
+        
+        if(contact_read == true) {
+            alert("cannot send sms after reading contacts");
+            return
+        }
+        if(bound_check() == false) {
+            alert("bound check failed");
+            return
+        }
+        if(location_read == true){
+            alert('cannot send SMS after reading location');
+        }
+        else if(isAllowed == true){
+            return proceed();
+        }
+        else{
+            alert("Access Not allowed");
+        }
+    }
+
+    var fs_policy = function(args,proceed,object)
+    {
+        var principal = thisPrincipal();
+        alert("principal \' " + principal + "\' invokes fileSystem read");
+        var isAllowed = principal_permission_check(principal,"filesystem",args,operation="read")
+        if(isAllowed){
+            alert("!!!!!fs_policy!!!!!");
+            return proceed();
+        }
+        return;
+    }
     document.addEventListener("deviceready", enableMonitors, false);
 
     function enableMonitors(){
