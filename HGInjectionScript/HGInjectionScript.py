@@ -34,6 +34,7 @@ def install_and_open_apk(app_location,apk_name,uninstall_list,sign=True):
     pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
     os.chdir(old_path)
     uninstall_list.append(pkg_name)
+    return pkg_name, old_path
 
 
     # input_key = input('Press any to move on to the next application. Press q to quit\n')
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     for input_html in dirs :
         apk_name = input_html.split("\\")[-4]
         app_location = APP_PATH+apk_name
-        install_and_open_apk(app_location,apk_name,uninstall_list,False)
+        install_and_open_apk(app_location,apk_name,uninstall_list,True)
         input_text = input("Is the application working y/n")
         if input_text == 'n':
             continue
@@ -164,7 +165,7 @@ if __name__ == '__main__':
         try : 
             with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
-                install_and_open_apk(app_location,app_name,uninstall_list)
+                pkg_name, old_path = install_and_open_apk(app_location,apk_name,uninstall_list)
                 input_key = input('Press any to move on to the next application. Press q to quit\n')
                 if input_key == 'q':
                     print(f'Last App Tested: {pkg_name}')
