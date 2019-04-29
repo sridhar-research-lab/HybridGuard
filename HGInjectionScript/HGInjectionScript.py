@@ -33,6 +33,7 @@ def install_and_open_apk(app_location,apk_name,uninstall_list,sign=True):
     os.system(f'adb install -r {apk_name}.apk')
     pkg_name = os.popen(f'sh adb-run.sh {apk_name}.apk').read().replace('\n','')
     os.chdir(old_path)
+    os.system(f'adb shell monkey -p {pkg_name} 1')
     uninstall_list.append(pkg_name)
     return pkg_name, old_path
 
@@ -166,7 +167,6 @@ if __name__ == '__main__':
             with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
                 pkg_name, old_path = install_and_open_apk(app_location,apk_name,uninstall_list)
-                os.system(f'adb shell monkey -p {pkg_name} 1')
                 os.chdir(old_path)
                 # pdb.set_trace()
                 webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugins}&resource_apis={resourceAPIs}')
