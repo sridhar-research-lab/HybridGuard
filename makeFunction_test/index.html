@@ -1,0 +1,115 @@
+<html>
+    <head>
+    </head>
+    <script>
+        (function(){
+            function makeFunction(body) {
+                if(body===undefined) throw new Error('makeFunction error: No code to make a function.');
+                var locals = body.match(/function\s+\w+\(/g);
+                var fnames = "";
+                if (locals) {
+                    body += ';';
+                    for (var i=0; i<locals.length; ++i) {
+                        var fname = locals[i].slice(8).match(/\w+/);
+                        fnames += 'if(typeof('+fname+')!="undefined")window.'+fname+'='+fname+';\n';
+                    }
+                }
+                body = fnames+"\n"+body;
+                return new Function(body);
+                // return body;
+            }
+            
+            function execWith(principal,f) {
+
+                //alert("execWith -> principal= " + principal);
+                if(f==undefined) return;
+
+                // alert("execWith -> principal= " + principal);
+                if(f===undefined) return;
+
+                // alert("execWith -> code= " + f.toString());
+                // shadowStack.push(principal);
+                //ensure to call original apply function
+                f.apply = Function.apply;
+                try{
+                    var r = f.apply(this,Array.prototype.slice.call(arguments,2));
+                }catch(e){}
+                // shadowStack.pop();
+                // flush_write(principal);
+                if (typeof r !== "undefined") return r;
+            }
+
+            function execScript(principal, dynamic_script_code){
+                //alert("execScript -> code= "+ principal+"-----" + dynamic_script_code);
+                var dynamic_script = makeFunction(dynamic_script_code); // call our code for turning a string into a global-scoped function
+                execWith(principal,dynamic_script);
+            }
+
+            //CORS request
+            //From: http://www.html5rocks.com/en/tutorials/cors/
+            function createCORSRequest(method, url) {
+                var xhr = new XMLHttpRequest();
+                if ("withCredentials" in xhr) {
+
+                    // Check if the XMLHttpRequest object has a "withCredentials" property.
+                    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+                    xhr.open(method, url, true);
+
+                } else if (typeof XDomainRequest != "undefined") {
+
+                    // Otherwise, check if XDomainRequest.
+                    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+                    xhr = new XDomainRequest();
+                    xhr.open(method, url);
+
+                } else {
+
+                    // Otherwise, CORS is not supported by the browser.
+                    xhr = null;
+
+                }
+                return xhr;
+            }
+
+            function getCORSContent(principal,url) {
+                var xhr = createCORSRequest('GET', url);
+                if (!xhr) {
+                    alert('CORS not supported');
+                    return;
+                }
+                var text;
+                // Response handlers.
+                xhr.onload = function() {
+                    text = xhr.responseText;
+                    //var title = getTitle(text);
+                    //alert('Response from CORS request to '+principal+"-------" + url + ': ' + text);
+                    execScript(principal,text);
+                };
+
+                xhr.onerror = function() {
+                    alert('Woops, there was an error making the request.');
+                };
+
+                try{
+                    xhr.send(null);
+                    return text;
+                }catch(e){
+                    irm_log("XMLHttpRequest error:"+e);
+                }
+                return '';
+
+            }
+            loadExternalJS=function(principal,url){
+                // alert("load executev" + url + " under principal " + principal);
+                getCORSContent(principal,url);
+            }
+        })();
+        loadExternalJS("test", "script1.js");
+        loadExternalJS("test", "script2.js");
+        
+        // makeFunction()
+    </script>
+    
+    <!-- <script src="script1.js"></script> -->
+    <!-- <script src="script2.js"></script> -->
+</html>
