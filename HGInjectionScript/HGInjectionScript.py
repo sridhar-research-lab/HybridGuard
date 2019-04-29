@@ -166,15 +166,15 @@ if __name__ == '__main__':
             with open(hybrid_guard_js, 'w') as f:
                 f.write(''.join(hg_file_contents))
                 pkg_name, old_path = install_and_open_apk(app_location,apk_name,uninstall_list)
-                input_key = input('Press any to move on to the next application. Press q to quit\n')
-                if input_key == 'q':
-                    print(f'Last App Tested: {pkg_name}')
-                    break
                 os.system(f'adb shell monkey -p {pkg_name} 1')
                 os.chdir(old_path)
                 # pdb.set_trace()
                 webbrowser.open(f'http://dry-meadow-56957.herokuapp.com/log_hybrid_guards/new?app_name={pkg_name}&permissions={permissions_used}&plugins={cordova_plugins}&resource_apis={resourceAPIs}')
                 print('Fill the form')
+                input_key = input('Press any to move on to the next application. Press q to quit\n')
+                if input_key == 'q':
+                    print(f'Last App Tested: {pkg_name}')
+                    break
         except Exception as e:
             print(f'Error: Failed to insert csp on {apk_name} : {e}')
             failed_list.append(input_html)

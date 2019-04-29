@@ -497,4 +497,4 @@ var principal_permission_check = function(principal,method,args){
     // loadExternalJS('js/controllers.js', callback_fn, document.head, "local");
     // loadExternalJS('https://cdn.jsdelivr.net/gh/ramvinoth/hgtesting/custom_thirdparty.js', callback_fn, document.head, "remote");
    
-})()
+})();
