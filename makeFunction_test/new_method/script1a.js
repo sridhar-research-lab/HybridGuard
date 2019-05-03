@@ -1,3 +1,3 @@
 var dun = function(){
-    alert(1);
+    alert(this.principal);
 }
