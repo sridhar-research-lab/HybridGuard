@@ -3,7 +3,7 @@
     </head>
     <script>
         (function(){
-            function makeFunction(body) {
+            function makeFunction_old(body) {
                 if(body===undefined) throw new Error('makeFunction error: No code to make a function.');
                 var locals = body.match(/function\s+\w+\(/g);
                 var fnames = "";
@@ -18,8 +18,22 @@
                 return new Function(body);
                 // return body;
             }
+            function makeFunction(body) {
+                if(body===undefined) throw new Error('makeFunction error: No code to make a function.');
+                var locals = body.match(/function\s+\w+\(/g);
+                var fnames = "";
+                if (locals) {
+                    body += ';';
+                    for (var i=0; i<locals.length; ++i) {
+                        var fname = locals[i].slice(8).match(/\w+/);
+                        fnames += 'if(typeof('+fname+')!="undefined")window.'+fname+'='+fname+';\n';
+                    }
+                }
+                body = fnames+"\n"+body;
+                return body;
+            }
             
-            function execWith(principal,f) {
+            function execWith_old(principal,f) {
 
                 //alert("execWith -> principal= " + principal);
                 if(f==undefined) return;
@@ -38,6 +52,19 @@
                 // flush_write(principal);
                 if (typeof r !== "undefined") return r;
             }
+            
+            function execWith(principal,f) {
+
+                //alert("execWith -> principal= " + principal);
+              
+                shadowStack.push(principal);
+                try{
+                    eval(f);
+                }catch(e){}
+                shadowStack.pop();
+                // flush_write(principal);
+            }
+            
 
             function execScript(principal, dynamic_script_code){
                 //alert("execScript -> code= "+ principal+"-----" + dynamic_script_code);
