@@ -1,0 +1,111 @@
+Manifest-Version: 1.0
+Created-By: 1.0 (Android)
+
+Name: res/drawable-hdpi/ic_launcher.png
+SHA1-Digest: tKSbTkLoaLb7cZSabNg8w6HpHEE=
+
+Name: res/xml/config.xml
+SHA1-Digest: VK5hPgNwxCecv1WvTw8nUBfn1IM=
+
+Name: assets/www/jquery.mobile.structure-1.3.1.css
+SHA1-Digest: 5RU38171W7IZpso5pebz89A6T2o=
+
+Name: assets/www/jquery.mobile-1.3.1.css
+SHA1-Digest: 7Jl4onHS8d+6UeDtJTLRh9ZQVcI=
+
+Name: assets/www/MSNWeather.js
+SHA1-Digest: FBM8TdoY/PZnaZfSHnJOWxO1gqc=
+
+Name: resources.arsc
+SHA1-Digest: gXMw4TxQlr+IjHtlhT/UUrIh+5Y=
+
+Name: assets/www/images/goodWeather.png
+SHA1-Digest: rkrZng4imlLYl3pu09ScpUdxy/Y=
+
+Name: res/drawable-ldpi/ic_launcher.png
+SHA1-Digest: Sc3j9aSdfVW7Q1BIx2Sk+bLIGwQ=
+
+Name: assets/www/images/icons-18-black.png
+SHA1-Digest: fV43xwMC0a1FUHHrEQTXG/DBquU=
+
+Name: AndroidManifest.xml
+SHA1-Digest: /keUrdmnZ1sIorNFMia1MRCJeN8=
+
+Name: assets/www/style.css
+SHA1-Digest: LK0LoAJrXx1Nwb1+CacmXkDq5U4=
+
+Name: assets/www/images/badWeather.png
+SHA1-Digest: 0LzRK6v2rlINHk7/sI/0m/mdZSg=
+
+Name: assets/www/AccuWeather.js
+SHA1-Digest: eB8v66UxJbDK1QeBFDUlV3pzD8g=
+
+Name: assets/www/images/icons-18-white.png
+SHA1-Digest: FoGyzN43urjxWXVJWG9YEbNJ4Wg=
+
+Name: assets/www/cordova-2.6.0.js
+SHA1-Digest: DDf9Y1jiYQGi2X/VXz6EgEQofzQ=
+
+Name: assets/www/appType.js
+SHA1-Digest: loy3gxrU9YUN0rxCUUwiXrAwKDI=
+
+Name: assets/www/NOAAWeather.js
+SHA1-Digest: Na3s+csFlrZX6n1VHWqiz4mIk+4=
+
+Name: assets/www/images/nav.png
+SHA1-Digest: ipMnAqMW02t3MrnqfWApfQm/sqg=
+
+Name: assets/www/jquery.mobile.theme-1.3.1.css
+SHA1-Digest: QiwTZg0mP3+5+DJt9Yn9vnie7BM=
+
+Name: assets/www/images/ajax-loader.gif
+SHA1-Digest: r7Wo1RXseyxOXYv8y0kPtbYDEcM=
+
+Name: assets/www/images/wind32.png
+SHA1-Digest: 08hPkbCs3z8ITlQ7acrD7RMCNHM=
+
+Name: assets/www/jquery.mobile-1.3.1.js
+SHA1-Digest: 8qO/sNPmKppi63bdcD1+Z6UjEng=
+
+Name: classes.dex
+SHA1-Digest: h9QJvckNXw4sMVJJUrbOSt0fLk4=
+
+Name: assets/www/images/icon36.png
+SHA1-Digest: 1pR0HfBSpT60MALqoXlO6cGeyZ0=
+
+Name: res/layout/main.xml
+SHA1-Digest: P1Abaw0efGnIBZwU19KP6SJzAbw=
+
+Name: assets/www/images/rain32.png
+SHA1-Digest: K4HCBfyVymb/0zvjTJvWN6ly70Y=
+
+Name: res/drawable-mdpi/ic_launcher.png
+SHA1-Digest: l0zOJaKVwCEbfxOyXO8zRYNpV3A=
+
+Name: assets/www/images/snow32.png
+SHA1-Digest: cdN4ryVHRKvdxH4ruQNtML+Hm2k=
+
+Name: assets/www/images/goodWeather.svg
+SHA1-Digest: DOJzenKIGvh33JT/UFPDiiPNeyg=
+
+Name: assets/www/jquery-1.8.3.min.js
+SHA1-Digest: i2ur/0e4qXk/NwNv0bGjrUHThCM=
+
+Name: assets/www/font.woff
+SHA1-Digest: +FgoTpRXHidziBl/R1fVFBt/DRk=
+
+Name: assets/www/images/dot.png
+SHA1-Digest: 7Oo6IBFvPSnIy9oyiys93fwHggE=
+
+Name: assets/www/script.js
+SHA1-Digest: Ls19iCtcamxiCdDkFdQFTCzxJjM=
+
+Name: assets/www/images/icons-36-black.png
+SHA1-Digest: IzyOtnVBPDa1SVQVEqAjKDWlUXE=
+
+Name: assets/www/images/icons-36-white.png
+SHA1-Digest: wMpruSGjsWnC8bZ3Bo4vu1ny7JU=
+
+Name: assets/www/index.html
+SHA1-Digest: EdI1ffvmeXyqphKNc3j5lavIh0Q=
+

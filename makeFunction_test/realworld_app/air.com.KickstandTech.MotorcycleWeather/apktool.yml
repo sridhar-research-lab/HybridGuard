@@ -1,0 +1,26 @@
+!!brut.androlib.meta.MetaInfo
+apkFileName: air.com.KickstandTech.MotorcycleWeather.apk
+compressionType: false
+doNotCompress:
+- arsc
+- js
+- gif
+- png
+isFrameworkApk: false
+packageInfo:
+  forcedPackageId: '127'
+  renameManifestPackage: null
+sdkInfo:
+  minSdkVersion: '8'
+  targetSdkVersion: '17'
+sharedLibrary: false
+sparseResources: true
+unknownFiles: {}
+usesFramework:
+  ids:
+  - 1
+  tag: null
+version: 2.3.4
+versionInfo:
+  versionCode: '8006100'
+  versionName: '8.61'

@@ -59,13 +59,13 @@
                         }
                         logText += ');';
                         var mainArguments = Array.prototype.slice.call(arguments);
-                        console.log(principal)
+                        console.log(principal);
                         this.principal = principal;
                         mainArguments.push(principal);
-                        for (name in this) {
-                            if(name == "user")
-                                alert("this[" + name + "]=" + this[name]);
-                        }
+                        // for (name in this) {
+                        //     if(name == "user")
+                        //         alert("this[" + name + "]=" + this[name]);
+                        // }
                         console.log(logText);
                     }
 
@@ -120,8 +120,8 @@
                 functionTracker.addTrackingToNamespace(window, principal);
             }
             // functionTracker.excludeTrackingToNamespace(window);
-            loadExternalJS("test1a", "script2a.js");
-            loadExternalJS("test2b", "script2b.js");
+            loadExternalJS("test1a", "script1a.js");
+            loadExternalJS("test2b", "script1b.js");
         })();
         // makeFunction()
     </script>

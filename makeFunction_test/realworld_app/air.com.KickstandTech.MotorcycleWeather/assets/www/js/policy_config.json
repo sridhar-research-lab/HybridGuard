@@ -1,0 +1,174 @@
+{
+ "resources": [{
+   "name": "contacts",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true",
+     "write": "true"
+    },
+
+    {
+     "principal_id": "remote",
+     "read": "false",
+     "write": "true"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "write": "false"
+    }
+   ]
+
+  },
+  {
+    "name" : "calendar",
+    "permissions" : [{
+      "principal_id" : "calendar",
+      "read" : "true",
+      "write" : "false"
+    }]
+  },
+  {
+   "name": "geolocation",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true"
+    },
+
+    {
+     "principal_id": "remote",
+     "read": "true"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false"
+    }
+   ]
+
+  },
+
+  {
+   "name": "sms",
+   "permissions": [{
+     "principal_id": "messaging",
+     "read": "true",
+     "send": "true"
+    }, {
+     "principal_id": "remote",
+     "read": "true",
+     "send": "false"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "send": "false"
+    }
+   ]
+
+  },
+
+  {
+    "name": "sms_whitelist",
+    "numbers": [ "9804284888",
+                "9376609221",
+                "+17049040672"
+              ]   
+  },
+  {
+    "name":"audio",
+    "permissions": [{
+      "principal_id":"local",
+      "read":"true"
+    },
+    {
+      "principal_id":"remote",
+      "read":"true"
+    }]
+  }
+  ,
+  {
+   "name": "camera",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true",
+     "write": "true"
+    }, {
+     "principal_id": "remote",
+     "read": "false",
+     "write": "false"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "write": "false"
+    }
+   ]
+
+  },
+  {
+   "name": "video",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true",
+     "write": "true"
+    }, {
+     "principal_id": "remote",
+     "read": "true",
+     "write": "false"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "write": "false"
+    }
+   ]
+
+  },
+  {
+   "name": "securestorage",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true",
+     "write": "true"
+    }, {
+     "principal_id": "remote",
+     "read": "true",
+     "write": "false"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "write": "false"
+    }
+   ]
+
+  },
+  {
+   "name": "accelerometer",
+   "permissions": [{
+     "principal_id": "local",
+     "read": "true",
+     "send": "true"
+    }, 
+    {
+     "principal_id": "remote",
+     "read": "true",
+     "send": "true"
+    },
+
+    {
+     "principal_id": "untrusted",
+     "read": "false",
+     "send": "false"
+    }
+   ]
+
+  }
+ ]
+}
